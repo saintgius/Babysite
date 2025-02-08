@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BabyDrop | Tattoo Artist</title>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery-js/2.5.0/css/lightgallery.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;700&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0a0a0a;
+            --secondary-color: #ffffff;
+            --accent-color: #FF4655;
+            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            --section-spacing: 8rem;
+        }
+
+        [data-theme="light"] {
+            --primary-color: #f9f9f9;
+            --secondary-color: #1a1a1a;
+        }
+
+        body {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            font-family: 'Urbanist', sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            opacity: 0.4;
+            z-index: -1;
+        }
+
+        .navbar {
+            padding: 1.5rem 5%;
+            position: fixed;
+            width: 90%;
+            top: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-radius: 15px;
+            margin: 1rem auto;
+            left: 0;
+            right: 0;
+            max-width: 1400px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .nav-brand .logo {
+            height: 50px;
+            transition: var(--transition);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        section {
+            padding: var(--section-spacing) 5%;
+            scroll-margin-top: 100px;
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            margin: 0;
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        h2 {
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60%;
+            height: 3px;
+            background: var(--accent-color);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            aspect-ratio: 1;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: var(--transition);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--accent-color);
+            background: transparent;
+            color: var(--secondary-color);
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        button {
+            background: var(--accent-color);
+            color: var(--secondary-color);
+            padding: 1.2rem 2.5rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 10px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-links a {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .bio-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .bio-image {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            transform: rotate(-3deg);
+            transition: var(--transition);
+        }
+
+        .bio-image:hover {
+            transform: rotate(0);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .bio-content {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-color);
+            color: var(--secondary-color);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translate(-50%, 100%); }
+            to { transform: translate(-50%, 0); }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <img src="logo.svg" alt="BabyDrop Logo" class="logo">
+        </div>
+        <ul class="nav-links">
+            <li><a href="#portfolio" data-nav-link>Portfolio</a></li>
+            <li><a href="#bio" data-nav-link>Bio</a></li>
+            <li><a href="#prenota" data-nav-link>Prenota</a></li>
+            <li><a href="#contatti" data-nav-link>Contatti</a></li>
+        </ul>
+        <button id="themeToggle" class="theme-toggle">
+            <i class="fas fa-moon"></i>
+        </button>
+    </nav>
+
+    <section class="hero">
+        <video autoplay muted loop class="hero-video">
+            <source src="media/hero-bg.mp4" type="video/mp4">
+        </video>
+        <div class="hero-content" data-aos="fade-up">
+            <h1 class="hero-title">BabyDrop Tattoo Art</h1>
+            <a href="#prenota" class="cta-button" data-aos="fade-up" data-aos-delay="200">
+                Prenota Ora
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <h2>Ultimi Lavori</h2>
+        <div class="portfolio-grid">
+            <!-- Aggiungi le tue immagini qui -->
+        </div>
+    </section>
+
+    <section id="bio">
+        <h2>La Mia Storia</h2>
+        <div class="bio-content">
+            <div class="bio-text">
+                <p>Appassionato di arte fin dall'infanzia, ho trasformato la mia passione in professione...</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="bio-image">
+                <img src="img/artist.jpg" alt="BabyDrop">
+            </div>
+        </div>
+    </section>
+
+    <section id="prenota">
+        <h2>Prenota Session</h2>
+        <div class="form-container">
+            <form id="bookingForm">
+                <div class="form-grid">
+                    <input type="text" placeholder="Nome Completo" required>
+                    <input type="email" placeholder="Email" required>
+                    <select required>
+                        <option value="">Stile preferito</option>
+                        <option value="traditional">Traditional</option>
+                        <option value="realistic">Realistico</option>
+                    </select>
+                    <input type="date" required>
+                    <textarea placeholder="Descrivi la tua idea..." rows="6" required></textarea>
+                </div>
+                <button type="submit">Invia Richiesta</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="contatti">
+        <h2>Contatti</h2>
+        <div class="contact-info">
+            <p><i class="fas fa-map-marker-alt"></i> Via del Tattoo 123, Milano</p>
+            <p><i class="fas fa-phone"></i> +39 123 456789</p>
+        </div>
+    </section>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery-js/2.5.0/js/lightgallery.min.js"></script>
+    <script>
+        // Inizializzazione AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Toggle Theme
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            themeToggle.querySelector('i').classList.toggle('fa-moon');
+            themeToggle.querySelector('i').classList.toggle('fa-sun');
+        });
+
+        // Form Submission
+        document.getElementById('bookingForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = 'Richiesta inviata con successo!';
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // LightGallery
+        lightGallery(document.querySelector('.portfolio-grid'), {
+            selector: '.portfolio-item',
+            download: false,
+            plugins: [lgZoom, lgThumbnail]
+        });
+
+        // Navbar Scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            navbar.classList.toggle('scrolled', window.scrollY > 100);
+        });
+    </script>
+</body>
+</html>
